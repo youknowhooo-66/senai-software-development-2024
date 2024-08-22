@@ -2,7 +2,7 @@ import React from 'react'
 
 function Bakugo() {
   return (
-    <div>
+    <div className='bakugo-container' >
       <img className='imagem-bakugo' src='./imagens/Bakugo.png' />
     </div>
   )
