@@ -1,14 +1,27 @@
 .body-container{
-
-    background-color: aquamarine;
-
+    /* background-color: aquamarine; */
+    text-align: center;
+}.nome-input{
+    text-align: center;
+}.idade-input{
+    text-align: center;  
 }.imagens-body{
     width: 140px;
-
-}.tituloDois{
-    text-align: center;
 }.imagem-dragonball{
     width: 150px;
 }.imagem-bakugo{
     width: 150px;
+}.input-nome{
+    border-style:dashed ;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 6%;
+}.input-idade{
+    border-style:dashed ;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 1.6%;
+    margin-bottom: 6%;
+
+
 }
