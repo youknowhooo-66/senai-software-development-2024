@@ -1,0 +1,11 @@
+* {
+    margin: 0;
+}
+#root {
+display: grid;
+grid-template-columns: 
+'cabeçalho cabelçalho'
+'lado-esquerdo principal'
+'rodape rodape'
+;
+}

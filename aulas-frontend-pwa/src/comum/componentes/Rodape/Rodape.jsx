@@ -1,8 +1,16 @@
-  import './Rodape.css';
+import './Rodape.css';
 
-  function Rodape() {
-    const anoAtual = new Date().getUTCFullYear();
-    return <footer className='rodape_root'>Copyright © {anoAtual} - Todos os direitos reservados - Maycon Gibson.</footer>;
-  }
+function Rodape() {
+  const anoAtual = new Date().getFullYear();
 
-  export default Rodape;
+  return (
+    <footer className="rodape_root">
+      <h6>
+        Copyright © {anoAtual} - Todos os direitos
+        reservados.
+      </h6>
+    </footer>
+  );
+}
+
+export default Rodape;
