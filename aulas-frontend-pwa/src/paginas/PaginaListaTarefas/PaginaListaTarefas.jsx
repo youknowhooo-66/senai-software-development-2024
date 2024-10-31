@@ -9,15 +9,22 @@ const PaginaListaTarefas = () => {
   const adicionarNaLista = () => {
     setTarefas([...tarefas, descricao]);
     setDescricao('');
+    document.getElementById('campoDescricao').focus();
   };
 
   return (
     <Principal titulo="Lista de Tarefas" voltarPara="/">
       <div>
         <input
+        id='campoDescricao'
           type="text"
           value={descricao}
           onChange={(e) => setDescricao(e.target.value)}
+          onKeyUp={(e)} => {
+            if (e.key === 'Enter') {
+            adicionarNaLista()
+          }
+        }}
         />
         <BotaoCustomizado aoClicar={adicionarNaLista}>
           +
