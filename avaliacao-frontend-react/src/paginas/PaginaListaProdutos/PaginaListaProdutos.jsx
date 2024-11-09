@@ -1,69 +1,73 @@
-import Principal from "../../../../avaliacao-frontend-react/src/comum/componentes/Principal/Principal";
-import BotaoCustomizado from "../../../../../aulas-frontend-pwa/src/comum/componentes/BotaoCustomizado/BotaoCustomizado";
+import './PaginaListaProdutos.css';
+import Principal from "../../comum/componentes/Principal/Principal";
+import BotaoCustomizado from '../../comum/componentes/BotaoCustomizado/BotaoCustomizado';
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import ServicosProdutos from "../../../../avaliacao-frontend-react/src/comum/servicos/ServicoProdutos";
-
-const servicosProdutos = new ServicosProdutos();
+import { useNavigate } from "react-router-dom";
+// import ServicoProduto from '../../comum/servicos/ServicoProduto';
 
 const PaginaListaProdutos = () => {
-  const [nome, setNome] = useState("");
-  const [preco, setPreco] = useState("");
-  const [produtos, setProdutos] = useState([]);
-  const [editingIndex, setEditingIndex] = useState(null);
+    const navigate = useNavigate();
 
-  const handleAddOrUpdateProduto = () => {
-    if (editingIndex === null) {
-      servicosProdutos.adicionarProduto(nome, preco, produtos, setProdutos);
-    } else {
-      servicosProdutos.atualizarProduto(nome, preco, produtos, setProdutos, editingIndex, setEditingIndex);
+    const [nome, setNome] = useState([]);
+    const [preco, setPreco] = useState([]);
+    
+    const [descricao1, setDescricao1] = useState('');
+    const [descricao2, setDescricao2] = useState('');
+    // const [tarefas, setTarefas] = useState([]);
+
+// const salvar = () => {
+//     const novoCliente = {nome, preco};
+
+//     ServicoProduto.salvar(novoProduto);
+//     navigate('/cadastro-produtos');
+// }; 
+const salvar = () => {
+    setNome([...nome, descricao1]);
+    setPreco([...preco, descricao2]);
+    setDescricao1('');
+    setDescricao2('');
+
+    if(descricao1 == ''){
+        alert('Preencha o Nome do produto')
     }
-    setNome("");
-    setPreco("");
-  };
-
-  return (
-    <Principal titulo={`Lista de Produtos (${produtos.length})`} voltarPara="/">
-      <div className="inputs">
-        <input
-          type="text"
-          placeholder="Nome do produto"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Preço do produto"
-          value={preco}
-          onChange={(e) => setPreco(e.target.value)}
-        />
-        <BotaoCustomizado aoClicar={handleAddOrUpdateProduto}>
-          {editingIndex === null ? "Adicionar" : "Atualizar"}
-        </BotaoCustomizado>
-      </div>
-      <div>
-        {produtos.length === 0 ? (
-          <p>Não há produtos para listar.</p>
-        ) : (
-          <ul>
-            {produtos.map((produto, index) => (
-              <li key={index}>
-                <p>Nome: {produto.nome}</p>
-                <p>Preço: {produto.preco}</p>
-                <button style={{ color: "blue" }} onClick={() => servicosProdutos.editarProduto(index, produtos, setNome, setPreco, setEditingIndex)}>
-                  Editar
-                </button>
-                <button style={{ color: "red" }} onClick={() => servicosProdutos.removerProduto(index, produtos, setProdutos)}>
-                  Remover
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-      <Link to="/">Voltar para a Página Inicial</Link>
-    </Principal>
-  );
+    if(descricao2 == ''){
+        alert('Preencha o Preço do produto')
+    }
+    if(descricao1 == '' && descricao2 == ''){
+        alert('Não há produtos para listar.')
+    }
 };
+return (
+<Principal
+titulo='Lista de Produtos ()'
+>
+<div className="campo">
+<label>Nome: </label>
+<input type="text" placeholder="Nome do produto" value={descricao1} onChange={(e) => setDescricao1(e.target.value)} />
+</div>
 
-export default PaginaListaProdutos;
+<div className="campo">
+<label>Preço: </label>
+<input
+type="number"
+placeholder="Preço do produto" value={descricao2} onChange={(e) => setDescricao2(e.target.value)}
+/>
+</div>
+<div className='botao'>
+<BotaoCustomizado cor='secundaria' aoClicar={salvar}>
+Adicionar
+</BotaoCustomizado>
+</div>
+        {
+        nome.map((item1, index1) => {
+          return <div key={index1}>Nome: {item1}</div>;
+          })}
+        {preco.map((item, index) => {
+          return <div key={index}>Preço: {item}</div>;
+        })}
+
+</Principal>
+)
+}
+
+export default PaginaListaProdutos
