@@ -18,10 +18,10 @@ CREATE TABLE peca (
 id_peca INT NOT NULL AUTO_INCREMENT,
 nome VARCHAR (45),
 peso INT,
-ano_fabricacao YEAR (4),
-fornecedor_id VARCHAR (45),
-categoria_id VARCHAR (45),
+ano_fabricacao DATE,
+fornecedor_id INT UNSIGNED,
+categoria_id INT,
 PRIMARY KEY (id_peca),
 FOREIGN KEY (categoria_id) REFERENCES categoria (id_categoria),
-FOREIGN KEY (forncedor_id) REFERENCES fornecedor (id_fornecedor)
+FOREIGN KEY (fornecedor_id) REFERENCES fornecedor (id_fornecedor)
 );
