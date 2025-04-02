@@ -83,3 +83,8 @@ SELECT id_veiculo, placa, cor, nome FROM veiculo
 JOIN cliente ON cliente.id_cliente = veiculo.cliente_id;
 
 DROP DATABASE estacionamento;
+
+SELECT nome, capacidade
+FROM estacionamento
+WHERE subsolo = 'SIM' AND especial = 'SIM' AND capacidade BETWEEN 20 AND 40
+ORDER BY capacidade ASC;
