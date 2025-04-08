@@ -74,4 +74,77 @@ SELECT * FROM pedido WHERE cliente_id NOT IN (SELECT id_cliente FROM cliente);
 SELECT * FROM pedido WHERE acompanhamento_id NOT IN (SELECT id_acompanhamento FROM acompanhamento);
 SELECT * FROM pedido WHERE cliente_id IS NULL OR acompanhamento_id IS NULL;
 
-SELECT pai.nome_pai, filho.nome, 
+CREATE DATABASE atv_avaliativa;
+USE atv_avaliativa;
+
+CREATE TABLE aluno (
+id_aluno INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+nome VARCHAR (100)
+);
+
+CREATE TABLE curso (
+id_curso INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+nome VARCHAR (100),
+duracao INT
+);
+
+CREATE TABLE inscricao (
+id_inscricao INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+dt_inscricao DATE,
+aluno_id INT NOT NULL,
+curso_id INT,
+FOREIGN KEY (curso_id) REFERENCES curso(id_curso),
+FOREIGN KEY (aluno_id) REFERENCES aluno(id_aluno)
+);
+
+CREATE TABLE mensalidade (
+id_mensalidade INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+inscricao_id INT,
+dt_vencimento DATE,
+valor DECIMAL(8,2),
+status_pagamento ENUM ('PAGO', 'NÃO PAGO'),
+FOREIGN KEY (inscricao_id) REFERENCES inscricao(id_inscricao)
+);
+
+INSERT INTO aluno (id_aluno, nome)
+VALUES 
+(1, 'João'),
+(2, 'Maria'),
+(3, 'Pedro'),
+(4, 'Ana'),
+(5, 'Lucas');
+
+INSERT INTO curso (id_curso, nome, duracao)
+VALUES 
+(1, 'Matemática', 12),
+(2, 'História', 10),
+(3, 'Física', 8),
+(4, 'Química', 6),
+(5, 'Biologia', 9);
+
+INSERT INTO inscricao (id_inscricao, aluno_id, dt_inscricao, curso_id)
+VALUES
+(1, 4, '2020-01-02', 4),
+(2, 3, '2020-01-10', 5),
+(3, 2, '2020-01-02', 2),
+(4, 4, '2020-06-02', 4),
+(5, 3, '2020-06-10', 3),
+(6, 2, '2020-06-02', 2);
+
+INSERT INTO mensalidade (id_mensalidade, inscricao_id, dt_vencimento, valor, status_pagamento)
+VALUES
+(1, 1, '2020-01-10', 550, 'PAGO'),
+(2, 1, '2020-01-10', 540, 'PAGO'),
+(3, 2, '2020-01-10', 530, 'PAGO'),
+(4, 4, '2020-06-10', 580, 'NÃO PAGO'),
+(5, 4, '2020-06-10', 570, 'NÃO PAGO'),
+(6, 5, '2020-06-10', 560, 'NÃO PAGO');
+
+SELECT inscricao.aluno_id, SUM(mensalidade.valor) AS total_mensalidades
+FROM mensalidade
+JOIN inscricao ON mensalidade.inscricao_id = inscricao.Id_inscricao
+GROUP BY inscricao.aluno_id;
+
+SELECT SUM(valor) AS total_nao_pago
+FROM mensalidade
+WHERE status_pagamento = 'Não Pago';
